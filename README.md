@@ -14,10 +14,6 @@ YunoMonitor can send you email or SMS if you give him an URL API to do it (like 
 
 **Shipped version:** 1.0
 
-## Configuration
-
-To configure this app.
-
 ## Documentation
 
  * Official documentation: https://github.com/zamentur/yunomonitor/blob/master/README.md
