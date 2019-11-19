@@ -108,6 +108,7 @@ echo "mails: [$mails]" > $final_path/conf/$app.yml
 echo "sms_apis: [$sms_api]" >> $final_path/conf/$app.yml 
 echo "monitored_servers: [$monitored_servers]" >> $final_path/conf/$app.yml 
 echo "monitoring_servers: [$monitoring_servers]" >> $final_path/conf/$app.yml 
+echo "cachet_apis: []" >> $final_path/conf/$app.yml 
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
