@@ -128,7 +128,7 @@ chmod u+x $final_path/yunomonitor.py
 #=================================================
 ynh_script_progression --message="Configuring SSOwat..." --time --weight=1
 
-ynh_app_setting_set --app=$app --key=unprotected_uris --value="/.well-known/yunomonitor/"
+ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
 
 #=================================================
 # RELOAD NGINX
