@@ -25,7 +25,7 @@ ynh_abort_if_errors
 #=================================================
 
 export domain=$(cat /etc/yunohost/current_host)
-export path_url=/
+export path_url=/.well-known/yunomonitor/
 ynh_export monitored_servers monitoring_servers mails sms_api
 
 app=$YNH_APP_INSTANCE_NAME
