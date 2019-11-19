@@ -1,0 +1,62 @@
+{
+    "name": "YunoMonitor",
+    "id": "yunomonitor",
+    "packaging_format": 1,
+    "description": {
+        "en": "Home made tool to monitor automatically your servers."
+    },
+    "version": "1.0.1~ynh1",
+    "url": "https://github.com/zamentur/yunomonitor",
+    "license": "AGPL-3.0",
+    "maintainer": {
+        "name": "ljf",
+        "email": "ljf+@reflexlibre.net",
+        "url": "https://reflexlibre.net"
+    },
+    "requirements": {
+        "yunohost": ">= 3.6"
+    },
+    "multi_instance": true,
+    "services": [
+        "nginx"
+    ],
+    "arguments": {
+        "install" : [
+            {
+                "name": "monitored_servers",
+                "ask": {
+                    "en": "List all servers you want to monitor with this server (separated by comma)"
+                },
+                "help": {
+                    "en": "You need to install yunomonitor on those servers or add manually a custom configuration file for each server to monitor"
+                },
+                "example": "example.com,example2.com",
+                "default": "localhost"
+            },
+            {
+                "name": "monitoring_servers",
+                "ask": {
+                    "en": "List all monitoring servers that monitored this server (separated by comma)"
+                },
+                "example": "example.com,example2.com",
+                "optional": true
+            },
+            {
+                "name": "mails",
+                "ask": {
+                    "en": "Mails to which send alerts about servers monitored by this server (separated by comma)"
+                },
+                "example": "john@example.com,jane@example.com",
+                "optional": true
+            },
+            {
+                "name": "sms_api",
+                "ask": {
+                    "en": "List here an SMS URL to use to send alerts by SMS (e.g. the internet provider 'free' offers some API for that)"
+                },
+                "example": "https://smsapi.free-mobile.fr/sendmsg?user=USERID&pass=PASSWORD&msg=",
+                "optional": true
+            }
+        ]
+    }
+}
