@@ -110,9 +110,9 @@ echo "monitored_servers: [$monitored_servers]" >> $final_path/conf/$app.yml
 echo "monitoring_servers: [$monitoring_servers]" >> $final_path/conf/$app.yml 
 echo "cachet_apis: []" >> $final_path/conf/$app.yml 
 sed -i 's/,/","/g' $final_path/conf/$app.yml
-sed -i 's/[/["/g' $final_path/conf/$app.yml
-sed -i 's/]/"]/g' $final_path/conf/$app.yml
-sed -i 's/[""]/[]/g' $final_path/conf/$app.yml
+sed -i 's/\[/["/g' $final_path/conf/$app.yml
+sed -i 's/\]/"]/g' $final_path/conf/$app.yml
+sed -i 's/\[""\]/[]/g' $final_path/conf/$app.yml
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
