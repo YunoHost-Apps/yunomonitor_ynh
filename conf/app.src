@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/zamentur/yunomonitor/archive/c0db33fe165d535410c6625b5a9d0b3856f7c548.tar.gz
-SOURCE_SUM=8d31a524e6e40860c9e362e0ca036b4f527f7e538c54ece920d576964f2bb928
+SOURCE_URL=https://github.com/zamentur/yunomonitor/archive/37fb3180b231f32cf5910b4282879b81a0539532.tar.gz
+SOURCE_SUM=521e6e287c8e4b8b518bb8ec386e0c0564e90bc53130d40127e40050a41594af
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
