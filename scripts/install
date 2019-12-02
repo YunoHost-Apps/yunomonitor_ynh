@@ -122,6 +122,12 @@ sed -i 's/\[""\]/[]/g' $final_path/conf/$app.yml
 ynh_store_file_checksum --file="$final_path/conf/$app.yml"
 
 #=================================================
+# INIT IGNORE FILE
+#=================================================
+echo "method level server message target" > $final_path/conf/ignore_alert.csv
+
+
+#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # SECURE FILES AND DIRECTORIES

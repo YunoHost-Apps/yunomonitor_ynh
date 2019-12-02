@@ -36,6 +36,10 @@ upgrade_type=$(ynh_check_app_version_changed)
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --time --weight=1
 
+if ! [ -f $final_path/conf/ignore_alert.csv ]; then
+    echo "method level server message target" > $final_path/conf/ignore_alert.csv
+fi
+
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
