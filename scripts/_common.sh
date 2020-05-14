@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="python3-yaml python3-dnspython python3-requests-toolbelt python3-spf whois smartmontools"
+pkg_dependencies="python3-dbus python3-yaml python3-dnspython python3-requests-toolbelt python3-spf whois smartmontools"
 
 #=================================================
 # PERSONAL HELPERS
