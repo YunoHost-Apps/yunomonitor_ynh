@@ -24,6 +24,7 @@
         "install" : [
             {
                 "name": "monitored_servers",
+                "type": "string",
                 "ask": {
                     "en": "List all servers you want to monitor with this server (separated by comma)"
                 },
@@ -35,6 +36,7 @@
             },
             {
                 "name": "monitoring_servers",
+                "type": "string",
                 "ask": {
                     "en": "List all monitoring servers that monitored this server (separated by comma)"
                 },
@@ -43,6 +45,7 @@
             },
             {
                 "name": "mails",
+                "type": "string",
                 "ask": {
                     "en": "Mails to which send alerts about servers monitored by this server (separated by comma)"
                 },
@@ -51,6 +54,7 @@
             },
             {
                 "name": "sms_api",
+                "type": "string",
                 "ask": {
                     "en": "List here an SMS URL to use to send alerts by SMS (e.g. the internet provider 'free' offers some API for that)"
                 },
