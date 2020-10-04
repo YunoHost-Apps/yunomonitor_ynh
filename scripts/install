@@ -33,7 +33,7 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_script_progression --message="Validating installation parameters..." --time --weight=1
+ynh_script_progression --message="Validating installation parameters..." --weight=1
 
 final_path=/opt/$app
 test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
@@ -41,7 +41,7 @@ test ! -e "$final_path" || ynh_die --message="This path already contains a folde
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..." --time --weight=1
+ynh_script_progression --message="Storing installation settings..." --weight=1
 
 ynh_save_args domain path_url monitored_servers monitoring_servers mails sms_api
 
@@ -52,14 +52,14 @@ ynh_save_args domain path_url monitored_servers monitoring_servers mails sms_api
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --time --weight=1
+ynh_script_progression --message="Installing dependencies..." --weight=1
 
 ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --time --weight=1
+ynh_script_progression --message="Setting up source files..." --weight=1
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
@@ -68,7 +68,7 @@ ynh_setup_source --dest_dir="$final_path"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring nginx web server..." --time --weight=1
+ynh_script_progression --message="Configuring nginx web server..." --weight=1
 
 # Create a dedicated nginx config
 # Note: i don't use the helper because i need this file to be named "000-"
@@ -82,7 +82,7 @@ ynh_systemd_action --service_name=nginx --action=reload
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --time --weight=1
+ynh_script_progression --message="Configuring system user..." --weight=1
 
 # Create a system user
 ynh_system_user_create --username=$app
@@ -143,14 +143,14 @@ chmod u+w $final_path/well-known
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring SSOwat..." --time --weight=1
+ynh_script_progression --message="Configuring SSOwat..." --weight=1
 
 ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --time --weight=1
+ynh_script_progression --message="Reloading nginx web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -158,4 +158,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --time --last
+ynh_script_progression --message="Installation of $app completed" --last

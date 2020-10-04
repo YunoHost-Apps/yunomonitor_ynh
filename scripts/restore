@@ -20,7 +20,7 @@ ynh_abort_if_errors
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading settings..." --time --weight=1
+ynh_script_progression --message="Loading settings..." --weight=1
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -30,7 +30,7 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
 #=================================================
-ynh_script_progression --message="Validating restoration parameters..." --time --weight=1
+ynh_script_progression --message="Validating restoration parameters..." --weight=1
 
 test ! -d $final_path \
 	|| ynh_die --message="There is already a directory: $final_path "
@@ -40,7 +40,7 @@ test ! -d $final_path \
 #=================================================
 # REINSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Reinstalling dependencies..." --time --weight=1
+ynh_script_progression --message="Reinstalling dependencies..." --weight=1
 
 # Define and install dependencies
 ynh_install_app_dependencies $pkg_dependencies
@@ -48,7 +48,7 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 # RECREATE THE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Recreating the dedicated system user..." --time --weight=1
+ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
 
 # Create the dedicated user (if not existing)
 ynh_system_user_create --username=$app
@@ -57,7 +57,7 @@ ynh_system_user_create --username=$app
 # RESTORE FILES
 #=================================================
 
-ynh_script_progression --message="Restoring app files..." --time --weight=1
+ynh_script_progression --message="Restoring app files..." --weight=1
 ynh_restore
 
 #=================================================
@@ -72,7 +72,7 @@ chmod u+x $final_path/yunomonitor.py
 #=================================================
 # RESTORE SYSTEMD
 #=================================================
-ynh_script_progression --message="Activating systemd timer..." --time --weight=1
+ynh_script_progression --message="Activating systemd timer..." --weight=1
 
 systemctl daemon-reload
 systemctl enable $app.service
@@ -84,7 +84,7 @@ systemctl start $app.timer
 #=================================================
 # RELOAD NGINX AND PHP-FPM
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --time --weight=1
+ynh_script_progression --message="Reloading nginx web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -92,4 +92,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Restoration completed for $app" --time --last
+ynh_script_progression --message="Restoration completed for $app" --last
