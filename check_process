@@ -1,0 +1,18 @@
+;; Test complet
+	; Manifest
+		monitored_servers="remote_domain.tld,remote_domain2.tld"
+		monitoring_servers=""
+		mails="john@example.com"
+		sms_api=""
+	; Checks
+		pkg_linter=1
+		setup_sub_dir=0
+		setup_root=0
+		setup_nourl=1
+		setup_private=0
+		setup_public=0
+		upgrade=1
+		backup_restore=1
+		multi_instance=1
+		port_already_use=0
+		change_url=0
