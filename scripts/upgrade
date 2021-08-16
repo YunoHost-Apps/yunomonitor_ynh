@@ -115,7 +115,6 @@ ynh_backup_if_checksum_is_different --file="$final_path/conf/$app.yml"
 # Recalculate and store the checksum of the file for the next upgrade.
 ynh_store_file_checksum --file="$final_path/conf/$app.yml"
 
-
 #=================================================
 # GENERIC FINALIZATION
 #=================================================

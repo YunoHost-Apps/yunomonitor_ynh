@@ -92,12 +92,14 @@ ynh_system_user_create --username=$app
 #=================================================
 # CONFIGURE SYSTEMD TIMER
 #=================================================
+
 ynh_add_systemd_config
 cp ../conf/systemd.timer "/etc/systemd/system/$app.timer"
 ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_file="/etc/systemd/system/$app.timer"
 systemctl daemon-reload
-systemctl enable $app.timer
+systemctl enable $app.timer --quiet
 systemctl start $app.timer
+
 #=================================================
 
 #=================================================

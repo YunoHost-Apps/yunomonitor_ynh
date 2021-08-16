@@ -3,7 +3,8 @@
     "id": "yunomonitor",
     "packaging_format": 1,
     "description": {
-        "en": "Home made tool to monitor automatically your servers."
+        "en": "Home made tool to monitor automatically your servers",
+        "fr": "Outil pour surveiller automatiquement vos serveurs"
     },
     "version": "1.1.0~ynh1",
     "url": "https://github.com/zamentur/yunomonitor",
@@ -14,7 +15,7 @@
         "url": "https://reflexlibre.net"
     },
     "requirements": {
-        "yunohost": ">= 3.6"
+        "yunohost": ">= 4.2.0"
     },
     "multi_instance": true,
     "services": [
