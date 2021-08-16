@@ -75,8 +75,8 @@ chmod u+x $final_path/yunomonitor.py
 ynh_script_progression --message="Activating systemd timer..." --weight=1
 
 systemctl daemon-reload
-systemctl enable $app.service
-systemctl enable $app.timer
+systemctl enable $app.service --quiet
+systemctl enable $app.timer --quiet
 systemctl start $app.timer
 
 #=================================================
