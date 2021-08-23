@@ -51,7 +51,7 @@ ynh_install_app_dependencies $pkg_dependencies
 ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
 
 # Create the dedicated user (if not existing)
-ynh_system_user_create --username=$app
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # RESTORE FILES
@@ -65,8 +65,9 @@ ynh_restore
 #=================================================
 
 # Restore permissions on app files
-chown -R root: $final_path
-chown $app:$app $final_path/yunomonitor.py
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 chmod u+x $final_path/yunomonitor.py
 
 #=================================================
