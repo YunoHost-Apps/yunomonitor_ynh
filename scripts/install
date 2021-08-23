@@ -46,9 +46,15 @@ ynh_script_progression --message="Storing installation settings..." --weight=1
 ynh_save_args domain path_url monitored_servers monitoring_servers mails sms_api
 
 #=================================================
-# STANDARD MODIFICATIONS
+# CREATE DEDICATED USER
 #=================================================
+ynh_script_progression --message="Configuring system user..." --weight=1
 
+# Create a system user
+ynh_system_user_create --username=$app --home_dir="$final_path"
+
+#=================================================
+# STANDARD MODIFICATIONS
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
@@ -65,10 +71,14 @@ ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$final_path"
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring nginx web server..." --weight=1
+ynh_script_progression --message="Configuring NGINX web server..." --weight=1
 
 # Create a dedicated nginx config
 # Note: i don't use the helper because i need this file to be named "000-"
@@ -78,14 +88,6 @@ cp ../conf/nginx.conf "$finalnginxconf"
 ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path" --target_file="$finalnginxconf"
 ynh_store_file_checksum --file="$finalnginxconf"
 ynh_systemd_action --service_name=nginx --action=reload
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Configuring system user..." --weight=1
-
-# Create a system user
-ynh_system_user_create --username=$app
 
 #=================================================
 # SPECIFIC SETUP
@@ -136,23 +138,14 @@ echo "method level server message target" > $final_path/conf/ignore_alert.csv
 #=================================================
 
 # Set permissions to app files
-chown -R root: $final_path
-chown $app:$app $final_path/yunomonitor.py
 chmod u+x $final_path/yunomonitor.py
 chmod u+w $final_path/conf
 chmod u+w $final_path/well-known
 
 #=================================================
-# SETUP SSOWAT
-#=================================================
-ynh_script_progression --message="Configuring SSOwat..." --weight=1
-
-ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
-
-#=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
