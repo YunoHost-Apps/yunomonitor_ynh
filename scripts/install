@@ -48,8 +48,6 @@ ynh_save_args domain path_url monitored_servers monitoring_servers mails sms_api
 #=================================================
 # STANDARD MODIFICATIONS
 #=================================================
-
-#=================================================
 # INSTALL DEPENDENCIES
 #=================================================
 ynh_script_progression --message="Installing dependencies..." --weight=1
@@ -68,7 +66,7 @@ ynh_setup_source --dest_dir="$final_path"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring nginx web server..." --weight=1
+ynh_script_progression --message="Configuring NGINX web server..." --weight=1
 
 # Create a dedicated nginx config
 # Note: i don't use the helper because i need this file to be named "000-"
@@ -152,7 +150,7 @@ ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
