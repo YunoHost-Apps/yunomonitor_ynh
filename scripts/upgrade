@@ -74,6 +74,8 @@ chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
 chown -R $app:www-data "$final_path"
 chmod u+x $final_path/yunomonitor.py
+chmod u+w $final_path/conf
+chmod u+w $final_path/well-known
 
 #=================================================
 # NGINX CONFIGURATION
