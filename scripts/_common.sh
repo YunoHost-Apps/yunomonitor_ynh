@@ -28,6 +28,7 @@ ynh_export () {
 }
 # Save listed var in YunoHost app settings 
 # usage: ynh_save_args VARNAME1 [VARNAME2 [...]]
+
 ynh_save_args () {
     for var in $@;
     do
