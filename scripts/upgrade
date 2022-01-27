@@ -22,9 +22,26 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 #=================================================
 # CHECK VERSION
 #=================================================
+ynh_script_progression --message="Checking version..."
 
 upgrade_type=$(ynh_check_app_version_changed)
 
+#=================================================
+# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
+#=================================================
+ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
+
+# Backup the current version of the app
+ynh_backup_before_upgrade
+ynh_clean_setup () {
+	# Restore it if the upgrade fails
+	ynh_restore_upgradebackup
+}
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
+
+#=================================================
+# STANDARD UPGRADE STEPS
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
@@ -35,20 +52,6 @@ if ! [ -f $final_path/conf/ignore_alert.csv ]; then
 fi
 
 #=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
-
-## Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
-	# restore it if the upgrade fails
-	ynh_restore_upgradebackup
-}
-## Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
-
-#=================================================
 # CREATE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
@@ -56,8 +59,6 @@ ynh_script_progression --message="Making sure dedicated system user exists..." -
 # Create a dedicated user (if not existing)
 ynh_system_user_create --username=$app --home_dir="$final_path"
 
-#=================================================
-# STANDARD UPGRADE STEPS
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -99,13 +100,7 @@ ynh_script_progression --message="Upgrading dependencies..." --weight=1
 ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
-
-# Create a dedicated systemd config
-ynh_add_systemd_config
-
+# SPECIFIC UPGRADE
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
 #=================================================
@@ -117,11 +112,12 @@ ynh_backup_if_checksum_is_different --file="$final_path/conf/$app.yml"
 ynh_store_file_checksum --file="$final_path/conf/$app.yml"
 
 #=================================================
-# RELOAD NGINX
+# SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
 
-ynh_systemd_action --service_name=nginx --action=reload
+# Create a dedicated systemd config
+ynh_add_systemd_config
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -129,6 +125,13 @@ ynh_systemd_action --service_name=nginx --action=reload
 ynh_script_progression --message="Reloading a systemd service..." --weight=1
 
 ynh_systemd_action --service_name=$app --action="reload" --log_path="/var/log/$app/$app.log"
+
+#=================================================
+# RELOAD NGINX
+#=================================================
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+
+ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
