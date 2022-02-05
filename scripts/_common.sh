@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="python3-dbus python3-crypto python3-paramiko python3-yaml python3-dnspython python3-requests-toolbelt python3-spf whois smartmontools"
+pkg_dependencies="python3-dbus python3-cryptography python3-paramiko python3-yaml python3-dnspython python3-requests-toolbelt python3-spf whois smartmontools"
 
 #=================================================
 # PERSONAL HELPERS
@@ -14,6 +14,7 @@ pkg_dependencies="python3-dbus python3-crypto python3-paramiko python3-yaml pyth
 #=================================================
 # EXPERIMENTAL HELPERS
 #=================================================
+
 ynh_export () {
     local ynh_arg=""
     for var in $@;
