@@ -11,17 +11,17 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 ## Vue d'ensemble
 
-Outil pour surveiller automatiquement vos serveurs
+YunoMonitor is a simple tools to auto-configure monitoring on a remote YunoHost server. So you need one server to monitor and another to run monitoring task.
 
-**Version incluse :** 1.1.0~ynh2
+
+**Version incluse :** 1.1.0~ynh3
 
 
 
 ## Avertissements / informations importantes
 
-YunoMonitor is a simple tools to auto-configure monitoring on a remote YunoHost server. So you need one server to monitor and another to run monitoring task.
-
 YunoMonitor can send you email or SMS if you give him an URL API to do it (like the API from the operator "free mobile").
+
 ## Documentations et ressources
 
 * Site officiel de l'app : https://github.com/zamentur/yunomonitor
