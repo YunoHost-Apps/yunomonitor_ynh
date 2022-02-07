@@ -91,6 +91,15 @@ ynh_systemd_action --service_name=nginx --action=reload
 #=================================================
 # SPECIFIC SETUP
 #=================================================
+# BUILD YUNOMONITOR
+#=================================================
+ynh_script_progression --message="Building Yunomonitor..."
+
+pushd "$final_path"
+	pip3 install pycryptodome
+popd
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..."

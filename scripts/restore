@@ -38,14 +38,6 @@ test ! -d $final_path \
 #=================================================
 # STANDARD RESTORATION STEPS
 #=================================================
-# REINSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Reinstalling dependencies..." --weight=1
-
-# Define and install dependencies
-ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
 # RECREATE THE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
@@ -71,6 +63,25 @@ chown -R $app:www-data "$final_path"
 chmod u+x $final_path/yunomonitor.py
 chmod u+w $final_path/conf
 chmod u+w $final_path/well-known
+
+#=================================================
+# SPECIFIC RESTORATION
+#=================================================
+# REINSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Reinstalling dependencies..." --weight=1
+
+# Define and install dependencies
+ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
+# BUILD YUNOMONITOR
+#=================================================
+ynh_script_progression --message="Building Yunomonitor..."
+
+pushd "$final_path"
+	pip3 install pycryptodome
+popd
 
 #=================================================
 # RESTORE SYSTEMD
