@@ -102,6 +102,15 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 # SPECIFIC UPGRADE
 #=================================================
+# BUILD YUNOMONITOR
+#=================================================
+ynh_script_progression --message="Building Yunomonitor..."
+
+pushd "$final_path"
+	pip3 install pycryptodome
+popd
+
+#=================================================
 # STORE THE CONFIG FILE CHECKSUM
 #=================================================
 
