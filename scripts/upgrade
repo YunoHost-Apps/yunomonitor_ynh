@@ -107,7 +107,9 @@ ynh_install_app_dependencies $pkg_dependencies
 ynh_script_progression --message="Building Yunomonitor..."
 
 pushd "$final_path"
-	pip3 install pycryptodome
+	python3 -m venv venv
+	venv/bin/pip install --upgrade pip
+	venv/bin/pip install pycryptodome
 popd
 
 #=================================================
