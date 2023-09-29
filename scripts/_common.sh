@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="whois smartmontools python3-pip python3-venv python3-dev libdbus-1-dev pkg-config libglib2.0-dev"
+pkg_dependencies="whois smartmontools python3-pip python3-venv python3-dev libdbus-1-dev pkg-config libglib2.0-dev libyaml-dev"
 
 python_packages="cryptography paramiko pyyaml dnspython requests-toolbelt pyspf dbus-python"
 
