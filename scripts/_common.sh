@@ -7,7 +7,7 @@
 # dependencies used by the app
 pkg_dependencies="whois smartmontools python3-pip python3-venv python3-dev"
 
-python_packages="cryptgraphy paramiko yaml dnspython requests-toolbel spf dbus"
+python_packages="cryptography paramiko yaml dnspython requests-toolbel spf dbus"
 
 #=================================================
 # PERSONAL HELPERS
