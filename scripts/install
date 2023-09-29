@@ -96,8 +96,7 @@ ynh_systemd_action --service_name=nginx --action=reload
 ynh_script_progression --message="Building Yunomonitor..."
 
 pushd "$final_path"
-	python3 -m venv venv
-	venv/bin/pip install --upgrade pip
+	python3 -m venv -- venv --system-site-packages --upgrade-deps
 	venv/bin/pip install pycryptodome
 popd
 
