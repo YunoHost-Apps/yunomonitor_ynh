@@ -20,13 +20,8 @@ YunoMonitor is a simple tools to auto-configure monitoring on a remote YunoHost 
 
 
 **Shipped version:** 1.1.0~ynh3
-## Disclaimers / important information
-
-YunoMonitor can send you email or SMS if you give him an URL API to do it (like the API from the operator "free mobile").
-
 ## Documentation and resources
 
-* Official app website: <https://github.com/zamentur/yunomonitor>
 * Official admin documentation: <https://github.com/zamentur/yunomonitor/blob/master/README.md>
 * Upstream app code repository: <https://github.com/zamentur/yunomonitor>
 * YunoHost Store: <https://apps.yunohost.org/app/yunomonitor>
