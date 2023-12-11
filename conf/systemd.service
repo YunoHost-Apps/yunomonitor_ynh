@@ -6,8 +6,8 @@ After=network.target
 Type=oneshot
 User=__APP__
 Group=__APP__
-WorkingDirectory=__FINALPATH__
-ExecStart=__FINALPATH__/yunomonitor.py -c __FINALPATH__/conf/__APP__.yml 
+WorkingDirectory=__INSTALL_DIR__
+ExecStart=__INSTALL_DIR__/yunomonitor.py -c __INSTALL_DIR__/conf/__APP__.yml 
 User=root
 Group=root
 

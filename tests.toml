@@ -1,0 +1,12 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/tests.v1.schema.json
+
+test_format = 1.0
+
+[default]
+
+    args.monitored_servers = "remote_domain.tld,remote_domain2.tld"
+    args.monitoring_servers = ""
+    args.mails = "john@example.com"
+    args.sms_api = ""
+
+    test_upgrade_from.4feb4a78181518956e7d230a2ab67d96992f8563.name = "1.1.0~ynh2"

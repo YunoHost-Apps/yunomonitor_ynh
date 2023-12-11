@@ -1,7 +1,0 @@
-SOURCE_URL=https://github.com/zamentur/yunomonitor/archive/0a2c295485dbda9da3b97353e094ef414c939609.tar.gz
-SOURCE_SUM=e9c63885c5158771a00ae892967a0f7d1f3f538f26d124f8f096bb7b8ff3113a
-SOURCE_SUM_PRG=sha256sum
-SOURCE_FORMAT=tar.gz
-SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=yunomonitor-1-1-0.tar.gz
-SOURCE_EXTRACT=true
