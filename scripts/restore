@@ -35,7 +35,7 @@ chmod u+w "$install_dir/well-known"
 ynh_script_progression --message="Building Yunomonitor..."
 
 pushd "$install_dir"
-	python3 -m pip install pycryptodome
+    python3 -m pip install pycryptodome
 popd
 
 #=================================================

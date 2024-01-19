@@ -10,7 +10,7 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# STORE SETTINGS
+# INITIALIZE AND STORE SETTINGS
 #=================================================
 
 domain=$(yunohost domain list --json | jq -r '.["main"]')
@@ -18,10 +18,6 @@ path=/.well-known/yunomonitor/
 
 ynh_app_setting_set --app="$app" --key="domain" --value="$domain"
 ynh_app_setting_set --app="$app" --key="path" --value="$path"
-
-# FIXME: required?
-ynh_export monitored_servers monitoring_servers mails sms_api
-
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -49,7 +45,7 @@ _yunomonitor_add_nginx_config
 ynh_script_progression --message="Building Yunomonitor..."
 
 pushd "$install_dir"
-	python3 -m pip install pycryptodome
+    python3 -m pip install pycryptodome pyyaml
 popd
 
 #=================================================
@@ -69,15 +65,17 @@ systemctl start "$app.timer"
 #=================================================
 ynh_script_progression --message="Adding a configuration file..."
 
-echo "mails: [$mails]" > $install_dir/conf/$app.yml
-echo "sms_apis: [$sms_api]" >> $install_dir/conf/$app.yml
-echo "monitored_servers: [$monitored_servers]" >> $install_dir/conf/$app.yml
-echo "monitoring_servers: [$monitoring_servers]" >> $install_dir/conf/$app.yml
-echo "cachet_apis: []" >> $install_dir/conf/$app.yml
-sed -i 's/,/","/g' $install_dir/conf/$app.yml
-sed -i 's/\[/["/g' $install_dir/conf/$app.yml
-sed -i 's/\]/"]/g' $install_dir/conf/$app.yml
-sed -i 's/\[""\]/[]/g' $install_dir/conf/$app.yml
+python3 -c '
+import sys
+import yaml
+print(yaml.dumps({
+    "mails":                sys.argv[1].split(","),
+    "sms_apis":             sys.argv[2].split(","),
+    "monitored_servers":    sys.argv[3].split(","),
+    "monitoring_servers":   sys.argv[4].split(","),
+}))
+' "$mails" "$sms_api" "$monitored_servers" "$monitoring_servers" \
+> "$install_dir/conf/$app.yml"
 
 # Calculate and store the config file checksum into the app settings
 ynh_store_file_checksum --file="$install_dir/conf/$app.yml"
@@ -87,7 +85,6 @@ ynh_store_file_checksum --file="$install_dir/conf/$app.yml"
 #=================================================
 
 echo "method level server message target" > "$install_dir/conf/ignore_alert.csv"
-
 
 # Set permissions to app files
 chmod u+x "$install_dir/yunomonitor.py"

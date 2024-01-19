@@ -4,8 +4,6 @@
 # COMMON VARIABLES
 #=================================================
 
-
-
 #=================================================
 # PERSONAL HELPERS
 #=================================================
@@ -29,19 +27,6 @@ _yunomonitor_remove_nginx_config() {
 #=================================================
 # EXPERIMENTAL HELPERS
 #=================================================
-
-ynh_export () {
-    local ynh_arg=""
-    for var in $@;
-    do
-        ynh_arg=$(echo $var | awk '{print toupper($0)}')
-        if [ "$var" == "path" ]; then
-            ynh_arg="PATH"
-        fi
-        ynh_arg="YNH_APP_ARG_$ynh_arg"
-        export $var="${!ynh_arg}"
-    done
-}
 
 #=================================================
 # FUTURE OFFICIAL HELPERS
