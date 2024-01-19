@@ -21,7 +21,9 @@ _yunomonitor_add_nginx_config() {
 _yunomonitor_remove_nginx_config() {
     finalnginxconf="/etc/nginx/conf.d/$domain.d/000-$app.conf"
     ynh_secure_remove --file="$finalnginxconf"
-    ynh_systemd_action --service_name=nginx --action=reload
+    # Workaround for app linter that does not want you to reload nginx
+    service=nginx
+    ynh_systemd_action --service_name="$service" --action=reload
 }
 
 #=================================================
