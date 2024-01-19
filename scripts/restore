@@ -11,41 +11,6 @@ source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# MANAGE SCRIPT FAILURE
-#=================================================
-
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
-
-#=================================================
-# LOAD SETTINGS
-#=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
-
-app=$YNH_APP_INSTANCE_NAME
-
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-
-#=================================================
-# CHECK IF THE APP CAN BE RESTORED
-#=================================================
-ynh_script_progression --message="Validating restoration parameters..." --weight=1
-
-test ! -d $final_path \
-	|| ynh_die --message="There is already a directory: $final_path "
-
-#=================================================
-# STANDARD RESTORATION STEPS
-#=================================================
-# RECREATE THE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
-
-# Create the dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path"
-
-#=================================================
 # RESTORE FILES
 #=================================================
 
@@ -57,30 +22,20 @@ ynh_restore
 #=================================================
 
 # Restore permissions on app files
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
-chmod u+x $final_path/yunomonitor.py
-chmod u+w $final_path/conf
-chmod u+w $final_path/well-known
-
-#=================================================
-# SPECIFIC RESTORATION
-#=================================================
-# REINSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Reinstalling dependencies..." --weight=1
-
-# Define and install dependencies
-ynh_install_app_dependencies $pkg_dependencies
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
+chmod u+x "$install_dir/yunomonitor.py"
+chmod u+w "$install_dir/conf"
+chmod u+w "$install_dir/well-known"
 
 #=================================================
 # BUILD YUNOMONITOR
 #=================================================
 ynh_script_progression --message="Building Yunomonitor..."
 
-pushd "$final_path"
-	pip3 install pycryptodome
+pushd "$install_dir"
+    python3 -m pip install pycryptodome
 popd
 
 #=================================================
@@ -89,9 +44,9 @@ popd
 ynh_script_progression --message="Activating systemd timer..." --weight=1
 
 systemctl daemon-reload
-systemctl enable $app.service --quiet
-systemctl enable $app.timer --quiet
-systemctl start $app.timer
+systemctl enable "$app.service" --quiet
+systemctl enable "$app.timer" --quiet
+systemctl start "$app.timer"
 
 #=================================================
 # GENERIC FINALIZATION

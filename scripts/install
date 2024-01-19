@@ -10,83 +10,32 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# MANAGE SCRIPT FAILURE
+# INITIALIZE AND STORE SETTINGS
 #=================================================
 
-ynh_clean_setup () {
-	true
-}
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+domain=$(yunohost domain list --json | jq -r '.["main"]')
+path=/.well-known/yunomonitor/
 
-#=================================================
-# RETRIEVE ARGUMENTS FROM THE MANIFEST
-#=================================================
-
-export domain=$(cat /etc/yunohost/current_host)
-export path_url=/.well-known/yunomonitor/
-ynh_export monitored_servers monitoring_servers mails sms_api
-
-app=$YNH_APP_INSTANCE_NAME
-
-#=================================================
-# CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
-#=================================================
-ynh_script_progression --message="Validating installation parameters..." --weight=1
-
-final_path=/opt/$app
-test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
-
-#=================================================
-# STORE SETTINGS FROM MANIFEST
-#=================================================
-ynh_script_progression --message="Storing installation settings..." --weight=1
-
-ynh_save_args domain path_url monitored_servers monitoring_servers mails sms_api
-
-#=================================================
-# STANDARD MODIFICATIONS
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=1
-
-ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Configuring system user..." --weight=1
-
-# Create a system user
-ynh_system_user_create --username=$app --home_dir="$final_path"
+ynh_app_setting_set --app="$app" --key="domain" --value="$domain"
+ynh_app_setting_set --app="$app" --key="path" --value="$path"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=1
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$final_path"
+ynh_setup_source --dest_dir="$install_dir"
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R "$app:www-data" "$install_dir"
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
 ynh_script_progression --message="Configuring NGINX web server..." --weight=1
 
-# Create a dedicated nginx config
-# Note: i don't use the helper because i need this file to be named "000-"
-finalnginxconf="/etc/nginx/conf.d/$domain.d/000-$app.conf"
-ynh_backup_if_checksum_is_different --file="$finalnginxconf"
-cp ../conf/nginx.conf "$finalnginxconf"
-ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path" --target_file="$finalnginxconf"
-ynh_store_file_checksum --file="$finalnginxconf"
-ynh_systemd_action --service_name=nginx --action=reload
+_yunomonitor_add_nginx_config
 
 #=================================================
 # SPECIFIC SETUP
@@ -95,8 +44,8 @@ ynh_systemd_action --service_name=nginx --action=reload
 #=================================================
 ynh_script_progression --message="Building Yunomonitor..."
 
-pushd "$final_path"
-	pip3 install pycryptodome
+pushd "$install_dir"
+    python3 -m pip install pycryptodome pyyaml
 popd
 
 #=================================================
@@ -105,50 +54,43 @@ popd
 ynh_script_progression --message="Configuring a systemd service..."
 
 ynh_add_systemd_config
-cp ../conf/systemd.timer "/etc/systemd/system/$app.timer"
-ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_file="/etc/systemd/system/$app.timer"
+ynh_add_config --template="systemd.timer" --destination="/etc/systemd/system/$app.timer"
+
 systemctl daemon-reload
-systemctl enable $app.timer --quiet
-systemctl start $app.timer
+systemctl enable "$app.timer" --quiet
+systemctl start "$app.timer"
 
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding a configuration file..."
 
-echo "mails: [$mails]" > $final_path/conf/$app.yml 
-echo "sms_apis: [$sms_api]" >> $final_path/conf/$app.yml 
-echo "monitored_servers: [$monitored_servers]" >> $final_path/conf/$app.yml 
-echo "monitoring_servers: [$monitoring_servers]" >> $final_path/conf/$app.yml 
-echo "cachet_apis: []" >> $final_path/conf/$app.yml 
-sed -i 's/,/","/g' $final_path/conf/$app.yml
-sed -i 's/\[/["/g' $final_path/conf/$app.yml
-sed -i 's/\]/"]/g' $final_path/conf/$app.yml
-sed -i 's/\[""\]/[]/g' $final_path/conf/$app.yml
+python3 -c '
+import sys
+import yaml
+split_or_empty = lambda x: [] if x == "" else x.split(",")
+print(yaml.dump({
+    "mails":                split_or_empty(sys.argv[1]),
+    "sms_apis":             split_or_empty(sys.argv[2]),
+    "monitored_servers":    split_or_empty(sys.argv[3]),
+    "monitoring_servers":   split_or_empty(sys.argv[4]),
+}))
+' "$mails" "$sms_api" "$monitored_servers" "$monitoring_servers" \
+> "$install_dir/conf/$app.yml"
 
 # Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum --file="$final_path/conf/$app.yml"
+ynh_store_file_checksum --file="$install_dir/conf/$app.yml"
 
 #=================================================
 # INIT IGNORE FILE
 #=================================================
 
-echo "method level server message target" > $final_path/conf/ignore_alert.csv
-
+echo "method level server message target" > "$install_dir/conf/ignore_alert.csv"
 
 # Set permissions to app files
-chmod u+x $final_path/yunomonitor.py
-chmod u+w $final_path/conf
-chmod u+w $final_path/well-known
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# RELOAD NGINX
-#=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-ynh_systemd_action --service_name=nginx --action=reload
+chmod u+x "$install_dir/yunomonitor.py"
+chmod u+w "$install_dir/conf"
+chmod u+w "$install_dir/well-known"
 
 #=================================================
 # END OF SCRIPT
