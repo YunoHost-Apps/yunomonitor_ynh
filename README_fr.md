@@ -19,7 +19,7 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 YunoMonitor is a simple tools to auto-configure monitoring on a remote YunoHost server. So you need one server to monitor and another to run monitoring task.
 
 
-**Version incluse :** 1.1.0~ynh3
+**Version incluse :** 1.1.0~ynh4
 ## Documentations et ressources
 
 * Documentation officielle de l’admin : <https://github.com/zamentur/yunomonitor/blob/master/README.md>
