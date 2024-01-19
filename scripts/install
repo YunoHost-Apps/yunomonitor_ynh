@@ -68,11 +68,12 @@ ynh_script_progression --message="Adding a configuration file..."
 python3 -c '
 import sys
 import yaml
-print(yaml.dumps({
-    "mails":                sys.argv[1].split(","),
-    "sms_apis":             sys.argv[2].split(","),
-    "monitored_servers":    sys.argv[3].split(","),
-    "monitoring_servers":   sys.argv[4].split(","),
+split_or_empty = lambda x: [] if x == "" else x.split(",")
+print(yaml.dump({
+    "mails":                split_or_empty(sys.argv[1]),
+    "sms_apis":             split_or_empty(sys.argv[2]),
+    "monitored_servers":    split_or_empty(sys.argv[3]),
+    "monitoring_servers":   split_or_empty(sys.argv[4]),
 }))
 ' "$mails" "$sms_api" "$monitored_servers" "$monitoring_servers" \
 > "$install_dir/conf/$app.yml"
