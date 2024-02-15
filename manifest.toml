@@ -7,7 +7,7 @@ name = "YunoMonitor"
 description.en = "Home made tool to monitor automatically your servers"
 description.fr = "Outil pour surveiller automatiquement vos serveurs"
 
-version = "1.1.0~ynh4"
+version = "2020.05.15~ynh1"
 
 maintainers = ["ljf"]
 
@@ -55,8 +55,8 @@ ram.runtime = "50M"
 
 [resources]
     [resources.sources.main]
-    url = "https://github.com/zamentur/yunomonitor/archive/0a2c295485dbda9da3b97353e094ef414c939609.tar.gz"
-    sha256 = "e9c63885c5158771a00ae892967a0f7d1f3f538f26d124f8f096bb7b8ff3113a"
+    url = "https://github.com/zamentur/yunomonitor/archive/9200895dc9bdd634d2866b0721a78665733dfd4c.tar.gz"
+    sha256 = "7b89c8c77a24447cf5d57e01dbac486c386bdf617174eec1fcd2a9ad778a6e36"
     autoupdate.strategy = "latest_github_commit"
 
     [resources.system_user]
