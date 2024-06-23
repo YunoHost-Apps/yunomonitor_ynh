@@ -9,7 +9,7 @@ It shall NOT be edited by hand.
 
 [![Install YunoMonitor with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=yunomonitor)
 
-*[Read this README is other languages.](./ALL_README.md)*
+*[Read this README in other languages.](./ALL_README.md)*
 
 > *This package allows you to install YunoMonitor quickly and simply on a YunoHost server.*  
 > *If you don't have YunoHost, please consult [the guide](https://yunohost.org/install) to learn how to install it.*
@@ -20,6 +20,10 @@ YunoMonitor is a simple tools to auto-configure monitoring on a remote YunoHost 
 
 
 **Shipped version:** 2020.05.15~ynh1
+## :red_circle: Antifeatures
+
+- **Upstream not maintained**: This software is not maintained anymore. Expect it to break down over time, be exposed to unfixed security breaches, etc.
+
 ## Documentation and resources
 
 - Official admin documentation: <https://github.com/zamentur/yunomonitor/blob/master/README.md>

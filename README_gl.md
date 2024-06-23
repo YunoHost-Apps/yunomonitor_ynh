@@ -20,6 +20,10 @@ YunoMonitor is a simple tools to auto-configure monitoring on a remote YunoHost 
 
 
 **Versión proporcionada:** 2020.05.15~ynh1
+## :red_circle: Debes considerar
+
+- **Upstream not maintained**: This software is not maintained anymore. Expect it to break down over time, be exposed to unfixed security breaches, etc.
+
 ## Documentación e recursos
 
 - Documentación oficial para admin: <https://github.com/zamentur/yunomonitor/blob/master/README.md>
