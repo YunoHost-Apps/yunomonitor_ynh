@@ -7,7 +7,7 @@ name = "YunoMonitor"
 description.en = "Home made tool to monitor automatically your servers"
 description.fr = "Outil pour surveiller automatiquement vos serveurs"
 
-version = "2020.05.15~ynh1"
+version = "2020.05.15~ynh2"
 
 maintainers = ["ljf"]
 
@@ -18,7 +18,7 @@ admindoc = "https://github.com/zamentur/yunomonitor/blob/master/README.md"
 fund = "https://donate.yunohost.org/"
 
 [integration]
-yunohost = ">= 4.3.0"
+yunohost = ">= 11.2.20"
 architectures = "all"
 multi_instance = false
 ldap = "not_relevant"

@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # YunoMonitor YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/yunomonitor.svg)](https://dash.yunohost.org/appci/app/yunomonitor) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/yunomonitor.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/yunomonitor.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/yunomonitor.svg)](https://ci-apps.yunohost.org/ci/apps/yunomonitor/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/yunomonitor.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/yunomonitor.maintain.svg)
 
 [![Instalatu YunoMonitor YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=yunomonitor)
 
@@ -19,7 +19,7 @@ EZ editatu eskuz.
 YunoMonitor is a simple tools to auto-configure monitoring on a remote YunoHost server. So you need one server to monitor and another to run monitoring task.
 
 
-**Paketatutako bertsioa:** 2020.05.15~ynh1
+**Paketatutako bertsioa:** 2020.05.15~ynh2
 ## :red_circle: Ezaugarri zalantzagarriak
 
 - **Jatorrizko garapena utzita**: Software honek ez du arduradunik. Denborak aurrera egin ahala funtzionatzeari utziko dio, konpondu gabeko segurtasun arazoak izango ditu, etab.

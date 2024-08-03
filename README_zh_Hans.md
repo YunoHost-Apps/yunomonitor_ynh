@@ -5,7 +5,7 @@
 
 # YunoHost 上的 YunoMonitor
 
-[![集成程度](https://dash.yunohost.org/integration/yunomonitor.svg)](https://dash.yunohost.org/appci/app/yunomonitor) ![工作状态](https://ci-apps.yunohost.org/ci/badges/yunomonitor.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/yunomonitor.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/yunomonitor.svg)](https://ci-apps.yunohost.org/ci/apps/yunomonitor/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/yunomonitor.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/yunomonitor.maintain.svg)
 
 [![使用 YunoHost 安装 YunoMonitor](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=yunomonitor)
 
@@ -19,7 +19,7 @@
 YunoMonitor is a simple tools to auto-configure monitoring on a remote YunoHost server. So you need one server to monitor and another to run monitoring task.
 
 
-**分发版本：** 2020.05.15~ynh1
+**分发版本：** 2020.05.15~ynh2
 ## :red_circle: 负面特征
 
 - **Upstream not maintained**: This software is not maintained anymore. Expect it to break down over time, be exposed to unfixed security breaches, etc.
