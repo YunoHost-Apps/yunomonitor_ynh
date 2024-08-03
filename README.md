@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # YunoMonitor for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/yunomonitor.svg)](https://dash.yunohost.org/appci/app/yunomonitor) ![Working status](https://ci-apps.yunohost.org/ci/badges/yunomonitor.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/yunomonitor.maintain.svg)
+[![Integration level](https://dash.yunohost.org/integration/yunomonitor.svg)](https://ci-apps.yunohost.org/ci/apps/yunomonitor/) ![Working status](https://ci-apps.yunohost.org/ci/badges/yunomonitor.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/yunomonitor.maintain.svg)
 
 [![Install YunoMonitor with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=yunomonitor)
 

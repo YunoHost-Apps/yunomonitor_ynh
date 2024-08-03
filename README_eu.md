@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # YunoMonitor YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/yunomonitor.svg)](https://dash.yunohost.org/appci/app/yunomonitor) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/yunomonitor.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/yunomonitor.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/yunomonitor.svg)](https://ci-apps.yunohost.org/ci/apps/yunomonitor/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/yunomonitor.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/yunomonitor.maintain.svg)
 
 [![Instalatu YunoMonitor YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=yunomonitor)
 
