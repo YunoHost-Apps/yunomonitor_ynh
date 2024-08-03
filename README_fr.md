@@ -19,7 +19,7 @@ Il NE doit PAS être modifié à la main.
 YunoMonitor is a simple tools to auto-configure monitoring on a remote YunoHost server. So you need one server to monitor and another to run monitoring task.
 
 
-**Version incluse :** 2020.05.15~ynh1
+**Version incluse :** 2020.05.15~ynh2
 ## :red_circle: Anti-fonctionnalités
 
 - **Application non maintenue **: Ce logiciel n'est plus maintenu. Attendez-vous à ce qu'il ne fonctionne plus avec le temps, et que l'on découvre des failles de sécurité qui ne seront pas corrigées, etc.
