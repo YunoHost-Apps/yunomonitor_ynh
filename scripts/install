@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
@@ -16,24 +10,23 @@ source /usr/share/yunohost/helpers
 domain=$(yunohost domain list --json | jq -r '.["main"]')
 path=/.well-known/yunomonitor/
 
-ynh_app_setting_set --app="$app" --key="domain" --value="$domain"
-ynh_app_setting_set --app="$app" --key="path" --value="$path"
+ynh_app_setting_set --key="domain" --value="$domain"
+ynh_app_setting_set --key="path" --value="$path"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --weight=1
+ynh_script_progression "Setting up source files..."
 
 ynh_setup_source --dest_dir="$install_dir"
 
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R "$app:www-data" "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:www-data" "$install_dir"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --weight=1
+ynh_script_progression "Configuring NGINX web server..."
 
 _yunomonitor_add_nginx_config
 
@@ -42,7 +35,7 @@ _yunomonitor_add_nginx_config
 #=================================================
 # BUILD YUNOMONITOR
 #=================================================
-ynh_script_progression --message="Building Yunomonitor..."
+ynh_script_progression "Building Yunomonitor..."
 
 pushd "$install_dir"
     python3 -m pip install pycryptodome pyyaml
@@ -51,10 +44,10 @@ popd
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..."
+ynh_script_progression "Configuring $app's systemd service..."
 
-ynh_add_systemd_config
-ynh_add_config --template="systemd.timer" --destination="/etc/systemd/system/$app.timer"
+ynh_config_add_systemd
+ynh_config_add --template="systemd.timer" --destination="/etc/systemd/system/$app.timer"
 
 systemctl daemon-reload
 systemctl enable "$app.timer" --quiet
@@ -63,7 +56,7 @@ systemctl start "$app.timer"
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..."
+ynh_script_progression "Adding $app's configuration..."
 
 python3 -c '
 import sys
@@ -79,7 +72,7 @@ print(yaml.dump({
 > "$install_dir/conf/$app.yml"
 
 # Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum --file="$install_dir/conf/$app.yml"
+ynh_store_file_checksum "$install_dir/conf/$app.yml"
 
 #=================================================
 # INIT IGNORE FILE
@@ -96,4 +89,4 @@ chmod u+w "$install_dir/well-known"
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_script_progression "Installation of $app completed"
